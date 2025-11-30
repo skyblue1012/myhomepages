@@ -15,12 +15,10 @@
     </div>
 
     <!-- Hidden YouTube iframe -->
-    <div style="display:none;">
-        <iframe id="ytplayer" width="0" height="0"
-            src="https://www.youtube.com/embed/RCmj8NQwgbo?si=3LHMeD0PdQ5KDtiP&controls=0"
-            frameborder="0" allow="autoplay"></iframe>
+    <div style="width:1px; height:1px; overflow:hidden;">
+        <iframe id="ytplayer" width="1" height="1" src="https://www.youtube.com/embed/RCmj8NQwgbo?si=goXtNCv1HClLSwkf" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </iframe>
     </div>
-
     <!-- Controls Row -->
     <div style="display:flex; gap:12px;">
 
@@ -62,7 +60,7 @@
 
 <script>
   // 기본 유튜브 URL (autoplay 파라미터 없이)
-  const YT_BASE_URL = "https://www.youtube.com/watch?v=RCmj8NQwgbo";
+  const YT_BASE_URL = "https://www.youtube.com/embed/RCmj8NQwgbo?si=goXtNCv1HClLSwkf";
 
   function playCafeMusic() {
     const iframe = document.getElementById('ytplayer');
