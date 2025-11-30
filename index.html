@@ -17,7 +17,6 @@
     <!-- Hidden YouTube iframe -->
     <div style="width:1px; height:1px; overflow:hidden;">
         <iframe id="ytplayer" width="1" height="1" src="https://www.youtube.com/embed/RCmj8NQwgbo?si=goXtNCv1HClLSwkf" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </iframe>
     </div>
     <!-- Controls Row -->
     <div style="display:flex; gap:12px;">
@@ -63,14 +62,14 @@
   const YT_BASE_URL = "https://www.youtube.com/embed/RCmj8NQwgbo?si=goXtNCv1HClLSwkf";
 
   function playCafeMusic() {
-    const iframe = document.getElementById('ytplayer');
-    // 항상 같은 기본 URL + autoplay=1
-    iframe.src = YT_BASE_URL + "&autoplay=1";
-  }
+    const iframe = document.getElementById('ytplayer');
+    // iframe의 src를 변경해야 합니다.
+    iframe.src = YT_BASE_URL + "&autoplay=1";
+  }
 
   function stopCafeMusic() {
     const iframe = document.getElementById('ytplayer');
     // 재생 멈출 때는 그냥 기본 URL로만 돌려놓기 (또는 빈 값도 가능)
-    iframe.src = YT_BASE_URL;
+    iframe.src = "";
   }
 </script>
