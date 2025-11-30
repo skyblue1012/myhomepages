@@ -62,7 +62,7 @@
 
 <script>
   // 기본 유튜브 URL (autoplay 파라미터 없이)
-  const YT_BASE_URL = "https://www.youtube.com/embed/RCmj8NQwgbo?si=3LHMeD0PdQ5KDtiP&controls=0";
+  const YT_BASE_URL = "https://www.youtube.com/watch?v=RCmj8NQwgbo";
 
   function playCafeMusic() {
     const iframe = document.getElementById('ytplayer');
