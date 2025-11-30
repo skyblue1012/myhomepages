@@ -1,4 +1,12 @@
-<!-- British Vintage Cafe Theme Music Player (Fixed Logic) -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Cafe Music Player</title>
+</head>
+<body>
+
 <div style="
     width:360px; 
     padding:25px; 
@@ -7,21 +15,17 @@
     box-shadow:0 5px 15px rgba(0,0,0,0.15); 
     font-family:Georgia, serif;
     border:3px solid #7A3E2C;
+    margin: 50px auto;
 ">
 
-    <!-- Music Title -->
     <div style="font-weight:bold; font-size:22px; margin-bottom:15px; color:#1F3A60;">
         🎵 The Red Brick Café
     </div>
 
-    <!-- Hidden YouTube iframe -->
-    <div style="width:1px; height:1px; overflow:hidden;">
-        <iframe id="ytplayer" width="1" height="1" src="https://www.youtube.com/embed/RCmj8NQwgbo?si=goXtNCv1HClLSwkf" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    </div>
-    <!-- Controls Row -->
+    <div id="player" style="width:1px; height:1px; overflow:hidden; margin-bottom: 20px;"></div>
+    
     <div style="display:flex; gap:12px;">
 
-        <!-- Play Button -->
         <button onclick="playCafeMusic()"
             style="
                 flex:1;
@@ -38,7 +42,6 @@
             ▶ Play
         </button>
 
-        <!-- Stop Button -->
         <button onclick="stopCafeMusic()"
             style="
                 flex:1;
@@ -58,18 +61,56 @@
 </div>
 
 <script>
-  // 기본 유튜브 URL (autoplay 파라미터 없이)
-  const YT_BASE_URL = "https://www.youtube.com/embed/RCmj8NQwgbo?si=goXtNCv1HClLSwkf";
+    // 1. 유튜브 플레이어 API 로드
+    let player;
+    const YOUTUBE_VIDEO_ID = "RCmj8NQwgbo"; // 여기에 영상 ID만 입력
 
-  function playCafeMusic() {
-    const iframe = document.getElementById('ytplayer');
-    // iframe의 src를 변경해야 합니다.
-    iframe.src = YT_BASE_URL + "&autoplay=1";
-  }
+    // API 코드를 비동기적으로 로드합니다.
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-  function stopCafeMusic() {
-    const iframe = document.getElementById('ytplayer');
-    // 재생 멈출 때는 그냥 기본 URL로만 돌려놓기 (또는 빈 값도 가능)
-    iframe.src = "";
-  }
+    // 2. API 준비 완료 후 플레이어 생성
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            videoId: YOUTUBE_VIDEO_ID,
+            playerVars: {
+                'controls': 0, // 컨트롤바 숨김
+                'disablekb': 1, // 키보드 비활성화
+                'modestbranding': 1, // 유튜브 로고 숨김
+                'loop': 1, // 반복 재생
+                'playlist': YOUTUBE_VIDEO_ID, // 루프를 위한 필수 설정
+            },
+            events: {
+                // 플레이어가 준비되면 실행 (이때 실제 재생이 시작되지는 않음)
+                'onReady': onPlayerReady
+            }
+        });
+    }
+
+    // 3. 플레이어 준비 완료 핸들러 (선택 사항)
+    function onPlayerReady(event) {
+        // 플레이어 준비가 완료되었음을 콘솔로 확인할 수 있습니다.
+        // console.log("YouTube Player is Ready.");
+    }
+
+    // 4. Play 버튼 클릭 시 호출
+    function playCafeMusic() {
+        if (player && typeof player.playVideo === 'function') {
+            // 플레이어 객체의 playVideo 메서드를 호출
+            player.playVideo();
+        }
+    }
+
+    // 5. Stop 버튼 클릭 시 호출
+    function stopCafeMusic() {
+        if (player && typeof player.stopVideo === 'function') {
+            // 플레이어 객체의 stopVideo 메서드를 호출
+            player.stopVideo();
+        }
+    }
 </script>
+
+</body>
+</html>
